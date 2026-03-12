@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Clock</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #1a1a2e;
+      font-family: 'Courier New', monospace;
+    }
+
+    .clock {
+      background: #0f0f23;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 16px 24px;
+      box-shadow: 0 0 20px rgba(0, 255, 136, 0.15);
+    }
+
+    .time {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #00ff88;
+      letter-spacing: 0.1em;
+      text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+    }
+
+    .date {
+      font-size: 0.7rem;
+      color: #555;
+      text-align: center;
+      margin-top: 4px;
+      letter-spacing: 0.08em;
+    }
+
+    .colon {
+      animation: blink 1s step-end infinite;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="clock">
+    <div class="time" id="time">00<span class="colon">:</span>00<span class="colon">:</span>00</div>
+    <div class="date" id="date"></div>
+  </div>
+
+  <script>
+    function pad(n) {
+      return String(n).padStart(2, '0');
+    }
+
+    function update() {
+      const now = new Date();
+      const h = pad(now.getHours());
+      const m = pad(now.getMinutes());
+      const s = pad(now.getSeconds());
+
+      document.getElementById('time').innerHTML =
+        `${h}<span class="colon">:</span>${m}<span class="colon">:</span>${s}`;
+
+      document.getElementById('date').textContent =
+        now.toLocaleDateString(undefined, { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
+    }
+
+    update();
+    setInterval(update, 1000);
+  </script>
+</body>
+</html>
